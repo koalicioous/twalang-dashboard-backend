@@ -19,4 +19,8 @@ class Activity extends Model
     public function location(){
         return $this->belongsTo('App\Location');
     }
+
+    public function purchases(){
+        return $this->hasMany('App\Purchase');
+    }
 }

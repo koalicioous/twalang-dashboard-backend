@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/locations','LocationController@index');
+
+Route::get('/user/count','UserController@count');
+Route::get('/user/genderDemographic','UserController@genderDemographic');
+Route::get('/user/ageDemographic', 'UserController@ageDemographic');

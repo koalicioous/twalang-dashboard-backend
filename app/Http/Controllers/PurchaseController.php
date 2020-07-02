@@ -14,7 +14,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        return Activity::find(1)->price;
+        return Activity::where('location_id',4)->get();
     }
 
     /**

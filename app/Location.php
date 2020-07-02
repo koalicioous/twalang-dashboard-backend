@@ -11,4 +11,8 @@ class Location extends Model
     public function activities(){
         return $this->hasMany('App\Activity');
     }
+
+    public function purchases(){
+        return $this->hasManyThrough('App\Purchase','App\Activity','location_id','activity_id');
+    }
 }
