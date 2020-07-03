@@ -19,7 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/locations','LocationController@index');
+Route::get('/location/{location}','LocationController@location');
 
 Route::get('/user/count','UserController@count');
 Route::get('/user/genderDemographic','UserController@genderDemographic');
 Route::get('/user/ageDemographic', 'UserController@ageDemographic');
+
+Route::get('/category','CategoryController@index');
+Route::get('/category/{category}','CategoryController@test');
