@@ -241,4 +241,10 @@ class LocationController extends Controller
         return round($conversion_rate = $success/$total,2);
     }
 
+    public function retrieveLocations(){
+        return response()->json(
+            Location::all()
+        );
+    }
+
 }

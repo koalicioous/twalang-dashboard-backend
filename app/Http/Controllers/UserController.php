@@ -23,14 +23,13 @@ class UserController extends Controller
         $femalePercentage   = round($female/$count,4) * 100;
 
         return response()->json([
-            'allUsers' => $count,
-            'male' => [
-                'count' => $male,
-                'percentage' => $malePercentage
-            ],
-            'female' => [
-                'count' => $female,
-                'percentage' => $femalePercentage
+            "labels" => ['Male','Female'],
+            "datasets" => [
+                [
+                    "label" => "Gender Comparison",
+                    "data" => [$male,$female],
+                    "backgroundColor" => ["#0297fa","#04cc83"]
+                ]
             ]
         ]);
     }
@@ -71,79 +70,23 @@ class UserController extends Controller
         $total = $child + $adolescent + $youngAdult + $middleAged + $aged;
 
         return response()->json([
-            "child" => [
-                "range" => '0 - 11',
-                "count" => $child,
-                "percentage" => round($child/$total,2),
-                "gender" => [
-                    "male" => [
-                        "count" => $childMale,
-                        "percentage" => round($childMale/$child,2)
-                    ],
-                    "female" => [
-                        "count" => $child - $childMale,
-                        "percentage" => round(($child - $childMale)/$child,2)
-                    ]
-                ]
-            ],
-            "adolescent" => [
-                "range" => '12 - 18',
-                "count" => $adolescent,
-                "percentage" => round($adolescent/$total,2),
-                "gender" => [
-                    "male" => [
-                        "count" => $adolescentMale,
-                        "percentage" => round($adolescentMale/$adolescent,2)
-                    ],
-                    "female" => [
-                        "count" => $adolescent - $adolescentMale,
-                        "percentage" => round(($adolescent - $adolescentMale)/$adolescent,2)
-                    ]
-                ]
-            ],
-            "youngAdult" => [
-                "range" => '19 - 24',
-                "count" => $youngAdult,
-                "percentage" => round($youngAdult/$total,2),
-                "gender" => [
-                    "male" => [
-                        "count" => $youngAdultMale,
-                        "percentage" => round($youngAdultMale/$youngAdult,2)
-                    ],
-                    "female" => [
-                        "count" => $youngAdult - $youngAdultMale,
-                        "percentage" => round(($youngAdult - $youngAdultMale)/$youngAdult,2)
-                    ]
-                ]
-            ],
-            "middleAged" => [
-                "range" => '25 - 35',
-                "count" => $middleAged,
-                "percentage" => round($middleAged/$total,2),
-                "gender" => [
-                    "male" => [
-                        "count" => $middleAgedMale,
-                        "percentage" => round($middleAgedMale/$middleAged,2)
-                    ],
-                    "female" => [
-                        "count" => $middleAged - $middleAgedMale,
-                        "percentage" => round(($middleAged - $middleAgedMale)/$middleAged,2)
-                    ]
-                ]
-            ],
-            "aged" => [
-                "range" => '35++',
-                "count" => $aged,
-                "percentage" => round($aged/$total,2),
-                "gender" => [
-                    "male" => [
-                        "count" => $agedMale,
-                        "percentage" => round($agedMale/$aged,2)
-                    ],
-                    "female" => [
-                        "count" => $aged - $agedMale,
-                        "percentage" => round(($aged - $agedMale)/$aged,2)
-                    ]
+            "labels" => ['child (0 - 11)','Adolescent (12 - 18)','Young Adult (19 - 24)','Middle Aged (25 - 25)','Aged (35++)'],
+            "datasets" => [
+                [
+                    "label" => 'Total',
+                    "backgroundColor" => '#f87979',
+                    "data" => [$child, $adolescent, $youngAdult, $middleAged, $aged]
+                ],
+                [
+                    "label" => 'Male',
+                    "backgroundColor" => '#ffbf1f',
+                    "data" => [$childMale, $adolescentMale, $youngAdultMale, $middleAgedMale, $agedMale]
+                ],
+                [
+                    "label" => 'Female',
+                    "backgroundColor" => '#ff1f80',
+                    "data" => [ $child - $childMale, $adolescent - $adolescentMale, $youngAdult - $youngAdultMale,
+                    $middleAged - $middleAgedMale, $aged - $agedMale]
                 ]
             ]
         ]);
