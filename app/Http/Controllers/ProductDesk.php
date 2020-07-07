@@ -149,4 +149,88 @@ class ProductDesk extends Controller
             ]);
         }
     }
+
+    public function categoryPerformance($id){
+
+        $category = Category::find($id);
+
+        if(empty($category)){
+            return response()->json([
+                "message" => "Resource not found"
+            ],400);
+        } else {
+
+            $category_purchases = $category->purchases()->where('status','Success')->get();
+            $locations = Location::all();
+            $locations_name = [];
+            $location_count = [];
+            $amount = [];
+
+            foreach($locations as $l){
+                array_push($locations_name,$l->name);
+            }
+
+            foreach($category_purchases as $cat){
+                $count = $cat->activity->location->id;
+                array_push($location_count,$count);
+            }
+
+            $purchase_location_amount = array_count_values($location_count);
+            ksort($purchase_location_amount);
+
+            for($i=0;$i<count($locations_name);$i++){
+                $key = $i+1;
+                if(empty($purchase_location_amount["$key"])){
+                    $amount[$i] = 0;
+                } else {
+                    $amount[$i] = $purchase_location_amount["$key"];
+                }
+            }
+
+            return response()->json([
+                "labels"    => $locations_name,
+                "datasets"  => [
+                    [
+                        "label" => "Kategori Terjual Dalam Kota",
+                        "data"  => $amount,
+                        "backgroundColor" => ['#ff5252','#ff9752','#ffab52','#ffc252','#ffd452','#52c8ff','#61d3ed','#6189ed','#dded61','#db2e2e','#24aded','#06c972','#ff5252','#ff9752','#ffab52','#ffc252']
+                    ]
+                ]
+            ]);
+        }
+    }
+
+    public function locationExpenses(){
+        $locations = Location::all();
+        $result = [];
+
+        foreach($locations as $loc){
+            $expenses = 0;
+            $successful_expenses = $loc->purchases()->where('status','Success')->get();
+            foreach($successful_expenses as $suc){
+                $expenses += $suc->gross_total;
+            }
+            $loc['expenses'] = $expenses;
+            array_push($result,$loc);
+        }
+
+        return $result;
+    }
+
+    public function categoryExpenses(){
+        $categories = Category::all();
+        $result = [];
+
+        foreach($categories as $loc){
+            $expenses = 0;
+            $successful_expenses = $loc->purchases()->where('status','Success')->get();
+            foreach($successful_expenses as $suc){
+                $expenses += $suc->gross_total;
+            }
+            $loc['expenses'] = $expenses;
+            array_push($result,$loc);
+        }
+
+        return $result;
+    }
 }

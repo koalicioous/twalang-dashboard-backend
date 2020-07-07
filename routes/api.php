@@ -27,18 +27,22 @@ Route::get('/user/genderDemographic','UserController@genderDemographic');
 Route::get('/user/ageDemographic', 'UserController@ageDemographic');
 
 Route::get('/category','CategoryController@index');
-Route::get('/category/{category}','CategoryController@test');
+Route::get('/category/retrieve','CategoryController@retrieveCategories');
 
 Route::get('/user/ageDemographic1','UserController@ageDemographic1');
-
-
 
 Route::get('/marketing/briefSummary', 'MarketingDesk@briefSummary');
 
 
 Route::get('/product/summary', 'ProductDesk@productSummary');
 Route::get('/product/locationPerformanceTable', 'ProductDesk@locationPerformanceTable');
+Route::get('/product/categoryPerformanceTable', 'ProductDesk@categoryPerformanceTable');
+
 Route::get('/product/successfulPurchaseDoughnut', 'ProductDesk@successfulPurchaseDoughnut');
 Route::get('/product/categorySuccessfulDoughnut', 'ProductDesk@categorySuccessfulDoughnut');
-Route::get('/product/categoryPerformanceTable', 'ProductDesk@categoryPerformanceTable');
+
 Route::get('/product/location/{location}','ProductDesk@locationPerformance');
+Route::get('/product/category/{category}','ProductDesk@categoryPerformance');
+
+Route::get('/product/locations/expenses', 'ProductDesk@locationExpenses');
+Route::get('/product/categories/expenses', 'ProductDesk@categoryExpenses');

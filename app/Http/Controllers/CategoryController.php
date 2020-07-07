@@ -92,4 +92,10 @@ class CategoryController extends Controller
         return $finished;
     }
 
+    public function retrieveCategories(){
+        return response()->json(
+            Category::all()
+        );
+    }
+
 }
